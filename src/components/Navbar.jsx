@@ -1,5 +1,5 @@
 import ThemeToggle from "@/components/ThemeToggle.jsx";
-import NavDropDownMenu from "@/components/NavDropDownMenu.jsx";
+import {NavDropDownMenu} from "@/components/index.js";
 
 
 const Navbar = () => {
