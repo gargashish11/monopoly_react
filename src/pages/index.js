@@ -1,5 +1,5 @@
 // Auto-generated index.js
-export { default as AllGames } from './AllGames';
+export { default as AllGames } from './RecentGames.jsx';
 export { default as Error } from './Error';
 export { default as HomeLayout } from './HomeLayout';
 export { default as Landing } from './Landing';
