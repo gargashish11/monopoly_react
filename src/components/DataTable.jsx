@@ -9,9 +9,11 @@ import {
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import {Button} from "@/components/ui/button.jsx";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const DataTable = ({columns, data}) => {
 
+    const navigate = useNavigate();
     const [sorting, setSorting] = useState([])
     const table = useReactTable({
         data, columns,
@@ -23,6 +25,10 @@ const DataTable = ({columns, data}) => {
             sorting,
         }
     })
+
+    const rowClick = (row) => {
+        navigate(`/game/${row.original.id}`)
+    }
 
     return (
         <div>
@@ -41,7 +47,8 @@ const DataTable = ({columns, data}) => {
                     <TableBody>
                         {table.getRowModel().rows?.length
                             ? (table.getRowModel().rows.map((row) =>
-                                (<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                                (<TableRow onClick={() => navigate(`/game/${row.original.id}`)} key={row.id}
+                                           data-state={row.getIsSelected() && "selected"}>
                                     {row.getVisibleCells().map((cell) => (<TableCell key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>))}

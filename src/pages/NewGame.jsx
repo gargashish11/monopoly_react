@@ -10,7 +10,8 @@ const NewGame = () => {
     if (isFetching) {
         content = <Skeleton className="h-8 w-8" times={4}/>;
     } else if (error) {
-        content = <div>Error fetching games.</div>
+        // content = <div>Error fetching players.</div>
+        content = <div>{error.data}</div>
     } else {
         data.map(datum => {
             playersData.push({id: datum.id, name: datum.name})

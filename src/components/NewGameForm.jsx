@@ -7,7 +7,8 @@ import {Button} from "@/components/ui/button.jsx";
 import {Separator} from "@/components/ui/separator.jsx";
 import {Badge} from "@/components/ui/badge.jsx";
 import {CircleMinus, CirclePlus} from "lucide-react";
-import {useState} from "react";
+import {useNewGameMutation} from "@/store/index.js";
+import {useNavigate} from "react-router-dom";
 
 const PLAYER_NAME_LENGTH = 3;
 
@@ -29,16 +30,16 @@ const formSchema = z.object({
 })
 
 const NewGameForm = ({playersData}) => {
-
-    const [players, setPlayers] = useState(() => playersData);
+    const [startNewGame, results] = useNewGameMutation();
+    const navigate = useNavigate();
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         mode: "onChange",
         defaultValues: {
             initialBalance: 1000,
-            players: players
-        },
+            players: playersData
+        }
     })
 
     const {fields, append, remove} = useFieldArray({
@@ -48,8 +49,7 @@ const NewGameForm = ({playersData}) => {
     });
 
     const onSubmit = (values) => {
-        console.log(fields.length)
-        console.log(values)
+        startNewGame(values).then(response => navigate(`/game/${response.data}`))
     }
 
     const onRemove = (e, index) => {
@@ -57,62 +57,62 @@ const NewGameForm = ({playersData}) => {
         remove(index)
         console.log(form.getValues("players").length)
     }
-
-    return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Badge variant="outline" className='text-xl mb-1 border-none'>Starting Balance</Badge>
-                <FormField
-                    control={form.control}
-                    name="initialBalance"
-                    render={({field}) => (
-                        <div className="flex justify-center">
-                            <FormItem className='flex flex-col align-middle'>
-                                <FormControl className='text-center w-100'>
-                                    <Input className='my-1' {...field} />
-                                </FormControl>
-                                <FormMessage className="text-red-500 text-xs my-2"/>
-                            </FormItem>
-                        </div>
-                    )}
-                />
-                <Separator className='my-1'/>
-                <Badge variant="outline" className='text-2xl my-1 border-none'>Add/Remove Players</Badge>
-                {fields.map((field, index) => {
-                    return (
-                        <FormField
-                            control={form.control}
-                            key={field.id}
-                            name={`players.${index}.name`}
-                            render={({field}) => (
-                                <div className="flex justify-center">
-                                    <Button onClick={(e) => onRemove(e, index)}
-                                            className='bg-background mx-4 hover:bg-red-700 px-2 py-1'>
-                                        <CircleMinus className='fill-red-700'/>
-                                    </Button>
-                                    <FormItem>
-                                        <FormControl className='text-center w-100'>
-                                            <Input className='my-1' {...field}/>
-                                        </FormControl>
-                                        <FormMessage className="text-red-500 text-xs"/>
-                                    </FormItem>
-                                    <Button onClick={() => append({id: null, name: ""})}
-                                            className='bg-background mx-4 hover:bg-green-700 px-2 py-1'>
-                                        <CirclePlus className='fill-green-700'/>
-                                    </Button>
-                                </div>
-                            )}
-                        />
-                    )
-                })}
-                <FormItem>
-                    <FormMessage></FormMessage>
-                    <Button variant='outline' className='border-2 rounded-xl my-2 px-9 py-6 text-[1rem]
+    return (<>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <Badge variant="outline" className='text-xl mb-1 border-none'>Starting Balance</Badge>
+                    <FormField
+                        control={form.control}
+                        name="initialBalance"
+                        render={({field}) => (
+                            <div className="flex justify-center">
+                                <FormItem className='flex flex-col align-middle'>
+                                    <FormControl className='text-center w-100'>
+                                        <Input className='my-1' {...field} />
+                                    </FormControl>
+                                    <FormMessage className="text-red-500 text-xs my-2"/>
+                                </FormItem>
+                            </div>
+                        )}
+                    />
+                    <Separator className='my-1'/>
+                    <Badge variant="outline" className='text-2xl my-1 border-none'>Add/Remove Players</Badge>
+                    {fields.map((field, index) => {
+                        return (
+                            <FormField
+                                control={form.control}
+                                key={field.id}
+                                name={`players.${index}.name`}
+                                render={({field}) => (
+                                    <div className="flex justify-center">
+                                        <Button onClick={(e) => onRemove(e, index)}
+                                                className='bg-background mx-4 hover:bg-red-700 px-2 py-1'>
+                                            <CircleMinus className='fill-red-700'/>
+                                        </Button>
+                                        <FormItem>
+                                            <FormControl className='text-center w-100'>
+                                                <Input className='my-1' {...field}/>
+                                            </FormControl>
+                                            <FormMessage className="text-red-500 text-xs"/>
+                                        </FormItem>
+                                        <Button onClick={() => append({id: null, name: ""})}
+                                                className='bg-background mx-4 hover:bg-green-700 px-2 py-1'>
+                                            <CirclePlus className='fill-green-700'/>
+                                        </Button>
+                                    </div>
+                                )}
+                            />
+                        )
+                    })}
+                    <FormItem>
+                        <FormMessage></FormMessage>
+                        <Button variant='outline' className='border-2 rounded-xl my-2 px-9 py-6 text-[1rem]
                 hover:bg-accent-foreground hover:text-background'
-                            type="submit" disabled={!form.formState.isValid}>Submit</Button>
-                </FormItem>
-            </form>
-        </Form>
+                                type="submit" disabled={!form.formState.isValid}>Start Game</Button>
+                    </FormItem>
+                </form>
+            </Form>
+        </>
     )
 };
 

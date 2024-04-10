@@ -4,7 +4,7 @@ import axiosBaseQuery from "@/store/api/axiosBaseQuery.js";
 const playersApi = createApi({
     reducerPath: 'players',
     baseQuery: axiosBaseQuery({
-        baseUrl: 'http://localhost:3000',
+        baseUrl: import.meta.env.VITE_BASE_URL,
     }),
     endpoints: (build) => {
         return {

@@ -15,5 +15,5 @@ export const store = configureStore({
 })
 
 setupListeners(store.dispatch)
-export {useFetchGamesQuery} from './api/gamesApi'
+export {useFetchGamesQuery, useNewGameMutation} from './api/gamesApi'
 export {useFetchPlayersQuery} from './api/playersApi'

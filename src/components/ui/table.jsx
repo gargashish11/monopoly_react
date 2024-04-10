@@ -1,13 +1,13 @@
 import * as React from "react"
 
-import { cn } from "@/lib/utils"
+import {cn} from "@/lib/utils"
 
 const Table = React.forwardRef(({ className, ...props }, ref) => (
   <div className="relative w-full overflow-auto">
     <table
       ref={ref}
       className={cn("w-full caption-bottom text-sm", className)}
-      {...props} />
+      {...props}/>
   </div>
 ))
 Table.displayName = "Table"
@@ -38,9 +38,8 @@ const TableRow = React.forwardRef(({ className, ...props }, ref) => (
     ref={ref}
     className={cn(
       "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
-      className
-    )}
-    {...props} />
+      className)}
+    {...props}/>
 ))
 TableRow.displayName = "TableRow"
 
@@ -49,9 +48,8 @@ const TableHead = React.forwardRef(({ className, ...props }, ref) => (
     ref={ref}
     className={cn(
       "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
-      className
-    )}
-    {...props} />
+      className)}
+    {...props}/>
 ))
 TableHead.displayName = "TableHead"
 
@@ -67,7 +65,7 @@ const TableCaption = React.forwardRef(({ className, ...props }, ref) => (
   <caption
     ref={ref}
     className={cn("mt-4 text-sm text-muted-foreground", className)}
-    {...props} />
+    {...props}/>
 ))
 TableCaption.displayName = "TableCaption"
 

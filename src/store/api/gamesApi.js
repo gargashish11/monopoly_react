@@ -4,7 +4,7 @@ import axiosBaseQuery from "@/store/api/axiosBaseQuery.js";
 const gamesApi = createApi({
     reducerPath: 'games',
     baseQuery: axiosBaseQuery({
-        baseUrl: 'http://localhost:3000',
+        baseUrl: import.meta.env.VITE_BASE_URL,
     }),
     endpoints(build) {
         return {
@@ -15,10 +15,21 @@ const gamesApi = createApi({
                         method: 'GET'
                     }
                 }
+            }),
+            newGame: build.mutation({
+                query: (values) => {
+                    return {
+                        url: '/game/new',
+                        method: 'POST',
+                        data: {
+                            ...values
+                        },
+                    }
+                }
             })
         }
     }
 })
 
-export const {useFetchGamesQuery} = gamesApi;
+export const {useFetchGamesQuery, useNewGameMutation} = gamesApi;
 export {gamesApi}
