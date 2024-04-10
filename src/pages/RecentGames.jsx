@@ -1,12 +1,18 @@
-import {useFetchGamesQuery} from "@/store/index.js";
 import {DataTable, GameColumns} from "@/components/index.js";
 import Skeleton from "@/components/Skeleton.jsx";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {getGames} from "@/store/api/gamesApi.js";
 
 const RecentGames = () => {
-    const {data, error, isFetching} = useFetchGamesQuery();
+    const queryClient = useQueryClient();
+
+    const {data, error, isLoading} = useQuery({
+        queryKey: 'games',
+        queryFn: getGames
+    })
 
     let content;
-    if (isFetching) {
+    if (isLoading) {
         content = <Skeleton className="h-8 w-8" times={4}/>;
     } else if (error) {
         // content = <div>Error fetching games.</div>
