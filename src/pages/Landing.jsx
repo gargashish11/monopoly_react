@@ -1,18 +1,24 @@
-import {useFetchGamesQuery} from "@/store/index.js";
 import Skeleton from "../components/Skeleton.jsx";
 import {DataTable, GameColumns} from "@/components/index.js";
 import {Button} from "@/components/ui/button.jsx";
 import {Link} from "react-router-dom";
 import {Separator} from "@/components/ui/separator.jsx";
+import {useQuery} from "@tanstack/react-query";
+import {getGames} from "@/store/api/gamesApi.js";
 
 export const Landing = () => {
-    const {data, error, isFetching} = useFetchGamesQuery();
+
+    const {data, error, isLoading} = useQuery({
+        queryKey: ['game'],
+        queryFn: ({signal}) => getGames({signal}),
+        staleTime: 30000
+    })
 
     let content;
-    if (isFetching) {
+    if (isLoading) {
         content = <Skeleton className="h-8 w-8" times={4}/>;
     } else if (error) {
-        content = <div>Error fetching games.</div>
+        content = <div>Error fetching games. Please try again later.</div>
     } else {
         content = <DataTable columns={GameColumns} data={data}/>
     }
