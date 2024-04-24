@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {Separator} from "@/components/ui/separator.jsx";
 import {useQuery} from "@tanstack/react-query";
 import {getGames} from "@/store/api/gamesApi.js";
+import {orderBy} from "lodash";
 
 export const Landing = () => {
 
@@ -18,6 +19,7 @@ export const Landing = () => {
     if (isLoading) {
         content = <Skeleton className="h-8 w-8" times={4}/>;
     } else if (error) {
+        console.log(error)
         content = <div>Error fetching games. Please try again later.</div>
     } else {
         content = <DataTable columns={GameColumns} data={data}/>

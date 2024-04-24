@@ -2,6 +2,7 @@ import {DataTable, GameColumns} from "@/components/index.js";
 import Skeleton from "@/components/Skeleton.jsx";
 import {useQuery} from "@tanstack/react-query";
 import {getGames} from "@/store/api/gamesApi.js";
+import {orderBy} from "lodash";
 
 const RecentGames = () => {
 
@@ -15,6 +16,7 @@ const RecentGames = () => {
     if (isLoading) {
         content = <Skeleton className="h-8 w-8" times={4}/>;
     } else if (error) {
+        console.log(error)
         content = <div>Error fetching games. Please try again later.</div>
         // content = <div>{error.data}</div>
     } else if (data.length === 0) {
