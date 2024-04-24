@@ -1,24 +1,10 @@
-import {createApi} from "@reduxjs/toolkit/query/react";
-import axiosBaseQuery from "@/store/api/axiosBaseQuery.js";
+import axios from "axios";
 
-const playersApi = createApi({
-    reducerPath: 'players',
-    baseQuery: axiosBaseQuery({
-        baseUrl: import.meta.env.VITE_BASE_URL,
-    }),
-    endpoints: (build) => {
-        return {
-            fetchPlayers: build.query({
-                query: () => {
-                    return {
-                        url: '/player/all',
-                        method: 'GET'
-                    }
-                }
-            })
-        }
-    }
+const playersApi = axios.create({
+    baseURL: import.meta.env.VITE_BASE_URL
 })
 
-export const {useFetchPlayersQuery} = playersApi;
-export {playersApi}
+export const getPlayers = async ({signal}) => {
+    const response = await playersApi.get("/player/all", signal)
+    return (await response).data;
+}

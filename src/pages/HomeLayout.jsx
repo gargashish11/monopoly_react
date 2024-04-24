@@ -13,7 +13,7 @@ const HomeLayout = () => {
             </div>
             <div className="lg:col-span-4">
                 <Navbar/>
-                <div className='py-8 px-8'>
+                <div className='py-8 md:px-8'>
                     {isPageLoading ? <div className=""/> : <Outlet/>}
                 </div>
             </div>

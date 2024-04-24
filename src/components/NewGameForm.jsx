@@ -7,8 +7,9 @@ import {Button} from "@/components/ui/button.jsx";
 import {Separator} from "@/components/ui/separator.jsx";
 import {Badge} from "@/components/ui/badge.jsx";
 import {CircleMinus, CirclePlus} from "lucide-react";
-import {useNewGameMutation} from "@/store/index.js";
 import {useNavigate} from "react-router-dom";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {addGame} from "@/store/api/gamesApi.js";
 
 const PLAYER_NAME_LENGTH = 3;
 
@@ -30,7 +31,21 @@ const formSchema = z.object({
 })
 
 const NewGameForm = ({playersData}) => {
-    const [startNewGame, results] = useNewGameMutation();
+    const queryClient = useQueryClient();
+
+    const startNewGame = useMutation({
+        mutationFn: addGame,
+        onSuccess: () => {
+            queryClient.invalidateQueries(
+                {queryKey: ['game']}
+            );
+            queryClient.invalidateQueries(
+                {queryKey: ['players']}
+            );
+        }
+
+    })
+
     const navigate = useNavigate();
 
     const form = useForm({
@@ -49,7 +64,11 @@ const NewGameForm = ({playersData}) => {
     });
 
     const onSubmit = (values) => {
-        startNewGame(values).then(response => navigate(`/game/${response.data}`))
+        startNewGame.mutate(values, {
+            onSuccess: (data) => {
+                navigate(`/game/${data.data}`)
+            }
+        })
     }
 
     const onRemove = (e, index) => {

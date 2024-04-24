@@ -14,5 +14,19 @@ export default defineConfig({
             'top-level-await': true
         },
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    tanstack: ['@tanstack/react-query', '@tanstack/react-table'],
+                    react_hook_form: ['react-hook-form'],
+                    tailwind_merge: ['tailwind-merge', 'tailwindcss-animate'],
+                    react_router_dom: ['react-router-dom'],
+                    vaul: ['vaul'],
+                    zod: ['zod']
+                }
+            }
+        }
+    }
 });
 
