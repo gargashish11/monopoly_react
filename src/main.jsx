@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './globals.css'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {AllGames, Error, HomeLayout, Landing, NewGame, SinglePageError} from "@/pages/index.js";
+import {Error, Game, HomeLayout, Landing, NewGame, RecentGames, SinglePageError} from "@/pages/index.js";
 import {Providers} from "@/components/index.js";
 import {Provider} from "react-redux";
 import {store} from "@/store/index.js";
@@ -22,12 +22,17 @@ const router = createBrowserRouter([
             },
             {
                 path: '/game/all',
-                element: <AllGames/>,
+                element: <RecentGames/>,
                 errorElement: <SinglePageError/>
             },
             {
                 path: '/game/new',
                 element: <NewGame/>,
+                errorElement: <SinglePageError/>
+            },
+            {
+                path: '/game/:id',
+                element: <Game/>,
                 errorElement: <SinglePageError/>
             }
         ]

@@ -1,5 +1,5 @@
 import ThemeToggle from "@/components/ThemeToggle.jsx";
-import {NavDropDownMenu} from "@/components/index.js";
+import {Logo, NavDropDownMenu} from "@/components/index.js";
 
 
 const Navbar = () => {
@@ -8,7 +8,7 @@ const Navbar = () => {
             <div>
                 <NavDropDownMenu/>
             </div>
-            <span className='mx-auto text-2xl lg:hidden'>Monopoly</span>
+            <Logo className='lg:hidden'/>
             <div className='flex items-center gap-x-4'>
                 <ThemeToggle/>
             </div>
