@@ -4,7 +4,6 @@ export { default as DataTablePagination } from './DataTablePagination';
 export { default as Drawer } from './Drawer';
 export { default as GameColumns } from './GameColumns';
 export { default as GameNameForm } from './GameNameForm';
-export { default as LinkDropDown } from './LinkDropDown';
 export { default as Logo } from './Logo';
 export { default as MenuAccordion } from './MenuAccordion';
 export { default as Navbar } from './Navbar';

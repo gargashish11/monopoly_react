@@ -74,7 +74,6 @@ const NewGameForm = ({playersData}) => {
     const onRemove = (e, index) => {
         e.preventDefault();
         remove(index)
-        console.log(form.getValues("players").length)
     }
     return (<>
             <Form {...form}>
@@ -105,12 +104,13 @@ const NewGameForm = ({playersData}) => {
                                 render={({field}) => (
                                     <div className="flex justify-center">
                                         <Button onClick={(e) => onRemove(e, index)}
+                                                disabled={field.value === 'Bank'}
                                                 className='bg-background mx-4 hover:bg-red-700 px-2 py-1'>
                                             <CircleMinus className='fill-red-700'/>
                                         </Button>
                                         <FormItem>
                                             <FormControl className='text-center w-100'>
-                                                <Input className='my-1' {...field}/>
+                                                <Input disabled={field.value === 'Bank'} className='my-1' {...field}/>
                                             </FormControl>
                                             <FormMessage className="text-red-500 text-xs"/>
                                         </FormItem>

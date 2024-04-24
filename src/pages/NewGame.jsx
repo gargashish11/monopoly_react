@@ -11,18 +11,14 @@ const NewGame = () => {
         staleTime: 30000
     })
 
-    const playersData = [];
-
     let content;
     if (isLoading) {
         content = <Skeleton className="h-8 w-8" times={4}/>;
     } else if (error) {
         content = <div>Error fetching players. Please try again later.</div>
     } else {
-        data.map(datum => {
-            playersData.push({id: datum.id, name: datum.name})
-        })
-        content = <NewGameForm playersData={playersData}/>
+        // console.log(data)
+        content = <NewGameForm playersData={data}/>
     }
     return <>{content}</>
 }

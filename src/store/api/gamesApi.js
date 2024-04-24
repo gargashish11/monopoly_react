@@ -1,11 +1,17 @@
 import axios from "axios";
+import {orderBy} from "lodash";
 
 const gamesApi = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL
 })
 
 export const getGames = async ({signal}) => {
-    const response = gamesApi.get("/game/all", signal)
+    const response = gamesApi.get("/game/all", {
+        data: signal,
+        transformResponse: (data) => {
+            return  orderBy(JSON.parse(data), datum => new Date(datum.lastModifiedDate), "desc")
+        }
+    })
     return (await response).data
 }
 
